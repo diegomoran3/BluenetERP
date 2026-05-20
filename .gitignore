@@ -1,0 +1,8 @@
+# Ignore secrets and generated files
+
+# Ignore .env files with real secrets
+# (keep .env.example instead for sharing)
+.env
+
+# Generated compose file — regenerate on the server with generate.sh
+compose.yaml
