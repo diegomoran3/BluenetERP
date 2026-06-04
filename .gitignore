@@ -6,3 +6,4 @@
 
 # Generated compose file — regenerate on the server with generate.sh
 compose.yaml
+import/images/*
