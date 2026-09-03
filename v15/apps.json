@@ -1,0 +1,10 @@
+[
+  {
+    "url": "https://github.com/frappe/erpnext",
+    "branch": "v15.110.0"
+  },
+  {
+    "url": "https://github.com/defendicon/POS-Awesome-V15",
+    "branch": "develop"
+  }
+]

@@ -97,27 +97,18 @@ if unmatched_names:
     for n in sorted(set(unmatched_names)):
         print(f"  - {n}")
 
-# ── 3. Template header (ERPNext Stock Reconciliation Items format) ──
-TEMPLATE_HEADER = [
-    ['Editar en masa Items'],
-    ['Barcode','Has Item Scanned','Item Code','Item Name','Item Group','Warehouse','Quantity','Stock UOM','Valuation Rate','Amount','Allow Zero Valuation Rate','Use Serial No / Batch Fields','Reconcile All Serial Nos / Batches','Serial / Batch Bundle','Current Serial / Batch Bundle','Serial No','Batch No','Current Qty','Current Amount','Current Valuation Rate','Current Serial No','Quantity Difference','Amount Difference'],
-    ['barcode','has_item_scanned','item_code','item_name','item_group','warehouse','qty','stock_uom','valuation_rate','amount','allow_zero_valuation_rate','use_serial_batch_fields','reconcile_all_serial_batch','serial_and_batch_bundle','current_serial_and_batch_bundle','serial_no','batch_no','current_qty','current_amount','current_valuation_rate','current_serial_no','quantity_difference','amount_difference'],
-    [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-    ['El formato CSV es sensible a mayúsculas y minúsculas'],
-    ['No edite los encabezados que están preestablecidos en la plantilla'],
-    ['------'],
-    ['','','','','','','','Nos','','','',1,'','','','','','','','','','',''],
-]
-
-# Column indexes in the template (0-based)
-IDX_ITEM_CODE = 2
-IDX_ITEM_NAME = 3
-IDX_ITEM_GROUP = 4
-IDX_WAREHOUSE = 5
-IDX_QTY = 6
-IDX_STOCK_UOM = 7
-IDX_VAL_RATE = 8
-IDX_ALLOW_ZERO_VAL = 10
+# ── 3. Essential fields only ──
+FIELD_NAMES = ['item_code', 'item_name', 'item_group', 'warehouse', 'qty',
+               'stock_uom', 'valuation_rate', 'allow_zero_valuation_rate']
+NUM_COLS = len(FIELD_NAMES)
+IDX_ITEM_CODE = 0
+IDX_ITEM_NAME = 1
+IDX_ITEM_GROUP = 2
+IDX_WAREHOUSE = 3
+IDX_QTY = 4
+IDX_STOCK_UOM = 5
+IDX_VAL_RATE = 6
+IDX_ALLOW_ZERO_VAL = 7
 
 # Build lookup: item_code → name, group from Producto.csv
 code_to_name = {}
@@ -138,10 +129,9 @@ with open(PRODUCTO_CSV, newline='', encoding='utf-8-sig') as f:
 # ── 4. Write final CSV ──
 with open(OUTPUT, 'w', newline='', encoding='utf-8-sig') as f:
     w = csv.writer(f)
-    for h_row in TEMPLATE_HEADER:
-        w.writerow(h_row)
+    w.writerow(FIELD_NAMES)
     for (code, wh), v in sorted(agg.items()):
-        row = [''] * 23
+        row = [''] * NUM_COLS
         row[IDX_ITEM_CODE] = code
         row[IDX_ITEM_NAME] = code_to_name.get(code, '')
         row[IDX_ITEM_GROUP] = code_to_group.get(code, '')

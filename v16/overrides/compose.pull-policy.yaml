@@ -1,0 +1,16 @@
+name: bluenet
+services:
+  backend:
+    pull_policy: if_not_present
+  configurator:
+    pull_policy: if_not_present
+  frontend:
+    pull_policy: if_not_present
+  queue-long:
+    pull_policy: if_not_present
+  queue-short:
+    pull_policy: if_not_present
+  scheduler:
+    pull_policy: if_not_present
+  websocket:
+    pull_policy: if_not_present

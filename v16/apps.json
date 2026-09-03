@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://github.com/frappe/erpnext",
+    "branch": "v16.34.1"
+  },
+  {
+    "url": "https://github.com/navariltd/KLiK_PoS",
+    "branch": "version-16"
+  },
+  {
+    "url": "https://github.com/defendicon/POS-Awesome-V15",
+    "branch": "develop"
+  }
+]
