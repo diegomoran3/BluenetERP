@@ -2,7 +2,7 @@
 set -e
 
 # Path to frappe_docker (relative to this script)
-FRAPPE_DOCKER_DIR="${FRAPPE_DOCKER_DIR:-$(cd ../frappe_docker && pwd)}"
+FRAPPE_DOCKER_DIR="${FRAPPE_DOCKER_DIR:-$(cd "$(dirname "$0")/../../frappe_docker" && pwd)}"
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ENV_FILE="$PROJECT_DIR/.env"
 OUTPUT_FILE="$PROJECT_DIR/compose.yaml"
