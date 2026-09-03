@@ -8,6 +8,12 @@ ENV_FILE="$PROJECT_DIR/.env"
 OUTPUT_FILE="$PROJECT_DIR/compose.yaml"
 PROJECT_NAME="${PROJECT_NAME:-bluenet}"
 
+if [ ! -f "$ENV_FILE" ]; then
+  echo "Error: $ENV_FILE not found. Copy .env.example and edit it:"
+  echo "  cp $PROJECT_DIR/.env.example $ENV_FILE"
+  exit 1
+fi
+
 echo "Frappe Docker: $FRAPPE_DOCKER_DIR"
 echo "Project:       $PROJECT_DIR"
 echo "Env:           $ENV_FILE"
