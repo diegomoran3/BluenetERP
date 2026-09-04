@@ -63,6 +63,24 @@ repos/
 
 2. Data import tooling lives in the repo root: `generate_import.py`, `scripts/*`, `import/*` (items, customers, warehouses, stock reconciliation).
 
+## LAN access with a friendly name
+
+`FRAPPE_SITE_NAME_HEADER=localhost` (in `.env`) decouples the URL from the site name: nginx always forwards the host `localhost` to frappe, so **clients can use any friendly hostname** — the site stays named `localhost`, nothing else changes.
+
+**Pick a name:** use `bluenet.local` or plain `bluenet`. Avoid `bluenet.com` — it's a real registered domain owned by someone else; machines without a hosts entry would go to the actual internet site, and you can't get an HTTPS certificate for it on a LAN.
+
+**Make the name resolve** (pick one, in order of preference):
+
+1. **Router DNS entry / DHCP reservation** (best): reserve the server's MAC → fixed IP in the router, and if the router supports host entries, map `bluenet.local` → that IP. All clients work automatically, and the IP never changes.
+2. **Hosts file on each client** (always works): add a line `<server-ip> bluenet.local` to
+   - Windows: `C:\Windows\System32\drivers\etc\hosts` (as admin)
+   - Linux/macOS: `/etc/hosts`
+3. **mDNS / computer name** (Windows clients): rename the server machine to `bluenet`; modern Windows clients then resolve `bluenet.local` via LLMNR/mDNS with zero config.
+
+**Drop the port (optional):** set `HTTP_PUBLISH_PORT=80` in `.env` if port 80 is free on the server — clients then use just `http://bluenet.local`. With 8080: `http://bluenet.local:8080`.
+
+**No HTTPS on LAN** — browsers will warn about the self-signed/untrusted situation; plain HTTP on the LAN is fine for internal use.
+
 ## Custom apps (optional: KLiK PoS + POS-Awesome)
 
 Stock ERPNext has no POS apps. To use them, build the custom image once (~30 min):
